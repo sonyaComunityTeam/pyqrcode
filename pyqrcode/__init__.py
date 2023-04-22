@@ -42,7 +42,8 @@ Examples:
 
 #Imports required for 2.7 support
 from __future__ import absolute_import, division, print_function, with_statement, unicode_literals
-
+from pyzbar.pyzbar import decode
+from PIL import Image
 import pyqrcode.tables
 import pyqrcode.builder as builder
 
@@ -50,6 +51,10 @@ try:
     str = unicode  # Python 2
 except NameError:
     pass
+
+def read(image):
+    d = decode(Image.open(image))
+    return d[0].data.decode("utf-8")
 
 def create(content, error='H', version=None, mode=None, encoding=None):
     """When creating a QR code only the content to be encoded is required,
